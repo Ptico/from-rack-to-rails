@@ -1,0 +1,49 @@
+# Создаем базовый роутинг
+
+Конечно, задавать через условие `if` каждый ответ не очень интересно, вынесем логику определения URL в отдельный класс `Routing` (см. код)
+В результате определения роутов мы должны получить примерно вот такой хеш:
+
+```ruby
+@routes = {
+  get: {
+    '/posts' => {
+      controller: PostsController,
+      action: "index"
+    }
+  },
+  post: {
+    '/posts' => {
+      controller: PostsController,
+      action: "create"
+    }
+  }
+}
+```
+
+В результате запроса из @request.request_method определяем тип (get/post) и достаем список заданных URL. Например для GET:
+
+```ruby
+{
+  '/posts' => {
+    controller: PostsController,
+    action: "index"
+  }
+}
+```
+
+а с помошью @request.path_info достаем конкретную информацию:
+
+```ruby
+route = {
+  controller: PostsController,
+  action: "index"
+}
+```
+
+после чего инициализируем контроллер и вызываем с помошью `send` соответствующий метод.
+
+```ruby
+route[:controller].new.send(route[:action].to_sym)
+```
+
+Метод контроллера возвращает нам массив из title и кода ответа, title мы передаем в наш html-темплейт, код ответа в @request.status
