@@ -9,3 +9,9 @@
 Новые шаги будут добавляться по мере возможности.
 
 Патчи и предложения приветствуются. Особенно предложения по переводу на Английский.
+
+## Новичок в ruby?
+
+* http://mislav.uniqpath.com/poignant-guide/
+* http://ruby.learncodethehardway.org/book/
+* http://rubymonk.com/
