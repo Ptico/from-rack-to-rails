@@ -43,6 +43,7 @@ route = {
 после чего инициализируем контроллер и вызываем с помошью `send` соответствующий метод.
 
 ```ruby
+# PostsController.new.index
 route[:controller].new.send(route[:action].to_sym)
 ```
 
