@@ -1,23 +1,26 @@
-# От Rack к Rails пошагово
+# From Rack to Rails step by step.
 
-Попытка на пальцах обьяснить принципы работы Rails.
+We will try to explain how Rails works.
 
-Реальный код Rails намного сложнее, поэтому мы будем создавать фреймворк Railz. Любое совпадение названий и методов не случайно ;)
+The guts of Rails are much more complicated, that's why we will be creating a Rails clone - Railz. 
+All characters appearing in this work are fictitious. Any resemblance to real persons, living or dead, is purely coincidental.
 
-Для полного понимания происходящего рекомендую разбирать каждый шаг по порядку и, как минимум, пытаться поменять что-то в коде, как максимум, воспроизвести шаги по своему в отдельном репозитарии.
+In order to get better understanding of what is going on we strongly recommend at least to change something in the code. To get a better expirience try to reproduce all steps in your own repository.
 
-Новые шаги будут добавляться по мере возможности.
+New steps will be added by request.
 
-Патчи и предложения приветствуются. Особенно предложения по переводу на Английский.
+Any updates, bug reports, fixes or suggestions are always welcome!
 
-## План следующих шагов
+## Next steps
 
-* 7. Расширение стандартных объектов
-* 8. REST: роутинг и контроллеры
-* 9. Добавляем отображение с помощью ERB
+* 7. Expand standart objects
+* 8. REST: routing and controllers
+* 9. Add displaying with ERB
 
-## Новичок в ruby?
+## New to ruby?
 
+You can check next resources:
 * http://mislav.uniqpath.com/poignant-guide/
 * http://ruby.learncodethehardway.org/book/
 * http://rubymonk.com/
+    

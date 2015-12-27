@@ -1,33 +1,44 @@
 # Rack
 
-Rack - это библиотека взаимодействия application-сервера c фреймворками.
+Rack is a separate library to providate interaction between application server and ruby apps like Rails framework.
 
-Когда вы вводите адрес в браузер, он находит IP-адрес нужного сервера и посылает ему следующую информацию:
+When you enter a url in a browser, it looks for an IP address of the requested server and sends to it the next information:
 
-* HTTP-метод - http://ru.wikipedia.org/wiki/HTTP#.D0.9C.D0.B5.D1.82.D0.BE.D0.B4.D1.8B
-* Запрашиваемый URL - http://ru.wikipedia.org/wiki/URL
-* Заголовки запроса - http://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%B7%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%BE%D0%B2_HTTP#.D0.97.D0.B0.D0.B3.D0.BE.D0.BB.D0.BE.D0.B2.D0.BA.D0.B8_.D0.B7.D0.B0.D0.BF.D1.80.D0.BE.D1.81.D0.B0
+* HTTP-method - https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+* Request URL - https://en.wikipedia.org/wiki/Uniform_Resource_Locator
+* Headers of the request - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields 
 
-Application-сервер получает запрос, и отдает его на обработку rack. Rack обрабатывает запрос: читает заголовки (в т.ч. выделяет из них cookie), разбивает URL на функциональные части и т.д. Затем вызывает метод `call` ruby-приложения и единственным параметром передает всю информацию о запросе в виде `Hash`.
+An application server gets a request, and passes it to rack to be proccessed. Rack transforms received data in to understandable for ruby app format (as a ruby hash). 
+What Rack does actually in general is:
+* Reads headers (including cookies)
+* Breakes url in to functional parts like server, port etc.
+* Looks for method 'call' can calls it with 'env' param as a hash.
 
-Все rack-совместимые application-сервера (webrick, mongrel, passenger, thin, unicorn и т.д.) по умолчанию при старте ищут конфигурационный файл config.ru, являющийся, по сути обычным ruby-файлом. Создадим в нем простейшее приложение.
+All rack compatible servers (webrick, mongrel, passenger, thin, unicorn etc) by default look for 'config.ru' file when they are started which in fact is just a ruby file. 
+Let's create a simple app in it.
 
-Главной отправной точкой в нем будет инструкция `run`. Она ожидает экземпляр нашего ruby-приложения, в котором определен метод `call`.
-В качестве возвращаемого значения, rack ожидает массив из трех элементов из которых он сформирует ответ браузеру:
+The starting point will be 'run' method. A 'call' method will be an entering point in our application. 
+Rack expects any application to return an array of 3 elements which will be used to create a response to be sent to browser.
 
-0. Код состояния (Integer) - http://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%BE%D0%B4%D0%BE%D0%B2_%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F_HTTP
-1. Заголовки ответа (Hash) - http://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B8_HTTP
-2. Тело ответа (почему-то Array) - может быть текстом, HTML-файлом, просто файлом, да и вообще чем угодно (при этом важно посылать соответствующий заголовок "Content-Type")
+0. Status Code - https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+1. HTTP Response headers - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields#Response_fields
+2. HTTP Response Body (which is an array) can be for example a text, an HTML-file, a file. The only requirement is that it should sent appropriate header 'Content-Type'. 
+As example, if response body is in 'JSON' format then 'Content-Type' should be 'application/json'. Just to be sure that choosen header is correct - check with specification, google or stackoverflow - http://stackoverflow.com/questions/477816/what-is-the-correct-json-content-type.
+More about HTTP messages.
+http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html
 
-Создадим маленький HelloWorld на rack, для примера выведем все параметры http запроса, объединенные переводом строки ("\n").
+We will create a small HelloWorld on rack. For example we will display all http request parameters.
 
-Чтобы увидеть результат выполнения в браузере, нужно поставить gem "rack", любой сервер на выбор, зайти в текущую директорию и запустить команду `rackup -p 3000`
+In order to see the result of our app execution you have to:
+1. Install any server.
+2. Install 'rack' gem with the next command: gem install rack
+3. Type in command line: rackup -p 3000
+4. Visit next url 'http://localhost:3000/test?key=value'
 
-Зайдем из браузера по следующему URL: `http://localhost:3000/test?key=value` - сервер выдаст нам отформатированный список параметров.
-Из них, в ближайшее время нам будут интересны следующие параметры:
-
+In the nearest future we will be interested in the next parameters:
 * REQUEST_URI
 * HTTP_HOST
 * REQUEST_METHOD
 * PATH_INFO
 * QUERY_STRING
+
